@@ -1,6 +1,6 @@
 0400a0d7d9970cb70a9c8780f26baae5d62db9465bb5df220ac11b3953c3c48b  ./.gitattributes
-7087d94a7780feb1358921627fc644938b092b3a024716275438d91844fb1e50  ./ACCEPTANCE-EVIDENCE.md
-cc12bd0848743ee13b7d8cdf23793d97a2df7320f0732a1d7e52c135b278a6d5  ./ACCEPTANCE.md
+5e3c02923b585cef6062fbe6b2920d4608c096ece9ff9d84a84b001c2431cf1d  ./ACCEPTANCE-EVIDENCE.md
+6c1ca81e82cefd580e122143c98e0904e70e73467b177ae2ac635e9d16ea8a94  ./ACCEPTANCE.md
 db81c20172bcb9199b000a68d9b3fd38bab8ea311a9b93dbaf48aa7eb1a7a8ea  ./README.md
 14aaaa5c1ab17ed67de8d7ea22f7a0d6ce0331c92a93b974e7cf3f2bd71e372b  ./alertmanager/alertmanager.yml
 261acb75988f241424f20ee50a92384a533bde30e1c0ac6098e3a108bbfc80e6  ./backup/host-overview.json
@@ -21,10 +21,10 @@ e9abd2e4b760bacf67c52d0c73a716b8659585b5f7903213b108bd23e0f36a56  ./evidence/ac2
 a66a129ffa67619ca9d6092baf201093a6f773943a92b1286f643670c3d531aa  ./evidence/ac3-network.txt
 e380aa824867d52b417e28c62856cf5c3625cca5a99396c0efe23c8cf76ccced  ./evidence/ac3-public-probe.txt
 ec4e1297aa8400e58a025841ec7d46f1640eac83709710967e45056831e77c02  ./evidence/ac4-result.txt
-722bf769fff720d34bcf2041dd56e856731061c94766efc4b0d0a276aaddbfff  ./evidence/cleanup-rerun.txt
+16b0bffcc3fbf45d56d0e93ee6e72d9880cd3a0eb7a5bf368902dda1260afd10  ./evidence/cleanup-rerun.txt
 7fcba2d696c48a64c040843cc71f1ff78657ba02d70c47a2eb3df8a068a86235  ./evidence/deploy-rerun.log
-c91fb3aa75fbd6bb9171aadea95e89573496478cffddd78890daa1193267283c  ./evidence/snapshot-after.txt
-806f40ef127b09168df57bd5f38f386e428729085ee55777c395bdd1c5c04c33  ./evidence/snapshot-before.txt
+8f60287ca9703e0ee4713fecb9e7dfef199e887c0041a0a79ada7107b0db7730  ./evidence/snapshot-after.txt
+b9094428b4caf15b5cc52ddb0e69f1b07f3079e56e9c3b7ba5d559b7e1bc564e  ./evidence/snapshot-before.txt
 12daca2daf646eb56f1358c2970cfc35b37a0d43d3aebe9e877105ceaf9446bd  ./exporters.list
 6417227ffa6a14262c8ed3485f1df57d2bcf066ab374bd3c415cdda3042727fb  ./grafana/grafana.ini
 e0117ea3c7c3719a2fbf3f19b0e97220fcf5e39d3d57091e1a64db0a3c319849  ./grafana/provisioning/dashboards/default.yml
@@ -37,4 +37,4 @@ bce4b4a84bb937965586c4db987fc885feda3f5013fe2c467235c219d9b640d6  ./scripts/gen_
 fafdef86d43a71fa137ba65271ac759aa30aad7fe2893850ed2b2c9b356b7f24  ./scripts/mock_exporter.py
 a33dcc2394d0196c3cec2e894fde84d80658fa9d34cd1c7cb21ef19fa24f0f86  ./stop.sh
 10bd8dafdd0ccc228ce143101c966c7467ba9c538e61e22a09b0bbbab0f342c1  ./tools/gen-manifest.py
-cc143d3c71ff128305bf150f3aba5938d5a617f29fda671f7023eb2e34a81765  ./tools/scan-secrets.py
+0e8eef223ac441f9eeff34baee979ca86b1c534cef6bd215c9b2b3b4b7e9aba7  ./tools/scan-secrets.py

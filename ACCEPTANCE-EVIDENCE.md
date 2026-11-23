@@ -1,16 +1,31 @@
 # ACCEPTANCE-EVIDENCE · Problem 3182
 
-Every criterion below lists the exact command, the real captured output, and the screenshot hash. Raw log files live in `evidence/` and are referenced by name.
+Acceptance criteria are quoted verbatim in Chinese and followed by the English translation used for scoring. Each criterion is immediately followed by its evidence: the exact command, the real captured output, and screenshot hashes. Raw log files live in `evidence/`.
 
-Environment: single Linux ops node, docker 26.1.3, compose v2.27.0, `sudo docker` required. Host address is redacted throughout.
+Environment: single Linux ops node, docker 26.1.3, compose v2.27.0, `sudo docker` required. Host address and third-party workload identities are redacted.
 
 ---
 
-## AC1 — Three dashboards show live data
+## AC1
 
-### A1.1 Stack up and health probes
+**原文（中文）**：三个面板在 dev 环境均有实时数据（附截图）
 
-Command (executed by `deploy.sh`):
+**English**：All three dashboards show live data in the dev environment (screenshots attached).
+
+### Inline numbers (no image required)
+
+```
+prometheus targets      : 5 / 5 up
+metric queries          : TOTAL 19 EMPTY 0
+dashboards provisioned  : host 8 panels / PostgreSQL 7 panels / Redis 4 panels
+probe prometheus /-/ready     : 200
+probe grafana /api/health     : 200
+probe alertmanager /-/ready   : 200
+```
+
+### Evidence
+
+Command (executed by `deploy.sh` and the capture script):
 
 ```bash
 sudo docker compose --env-file .runtime.env -f docker-compose.monitoring.yml up -d
@@ -32,7 +47,7 @@ GRAFANA_API_HEALTH_BODY={  "commit": "30bb7a93ca",  "database": "ok",  "version"
 ALERTMANAGER_READY_HTTP=200
 ```
 
-### A1.2 Prometheus targets
+Targets (5/5 up):
 
 ```
 alertmanager 127.0.0.1:28393 up
@@ -42,7 +57,7 @@ prometheus 127.0.0.1:28390 up
 redis mock-redis-1 up
 ```
 
-### A1.3 Dashboards loaded by Grafana provisioning
+Dashboards loaded by provisioning (8 / 7 / 4 panels):
 
 ```
 dnmon-postgresql | PostgreSQL 总览 · PostgreSQL Overview
@@ -50,17 +65,13 @@ dnmon-redis | Redis 总览 · Redis Overview
 dnmon-host | 主机总览 · Host Overview
 ```
 
-Panel counts: host 8, PostgreSQL 7, Redis 4. Each dashboard carries `env` and `node` template variables.
-
-### A1.4 Nineteen metric queries, zero empty
-
 `evidence/ac1-queries.json` is produced by running every panel expression against the Prometheus HTTP API. Summary printed at capture time:
 
 ```
 TOTAL 19 EMPTY 0 []
 ```
 
-### A1.5 Screenshots (sha256)
+Screenshots (sha256):
 
 | File | SHA256 | Size |
 |---|---|---|
@@ -68,7 +79,7 @@ TOTAL 19 EMPTY 0 []
 | `evidence/ac1-postgresql.png` | `5ec9f2f83c95d92875ff9e4eb3b7be0a4144ecbd3e2489ede8a882d581d33cef` | 134909 B |
 | `evidence/ac1-redis.png` | `2ddfa0189a572f590bc45774adb23c7d7472394e2c9ecd0bd4eafdea787e1d7c` | 41438 B |
 
-Verify with:
+Verify:
 
 ```bash
 sha256sum evidence/ac1-host.png evidence/ac1-postgresql.png evidence/ac1-redis.png
@@ -76,9 +87,23 @@ sha256sum evidence/ac1-host.png evidence/ac1-postgresql.png evidence/ac1-redis.p
 
 ---
 
-## AC2 — Unauthenticated visit redirects to login, no signup entry
+## AC2
 
-### A2.1 Redirect and API rejection
+**原文（中文）**：未登录访问 Grafana 跳转登录页，页面上没有注册入口（附截图）
+
+**English**：Unauthenticated access to Grafana redirects to the login page, and the page has no registration entry (screenshots attached).
+
+### Inline numbers
+
+```
+unauthenticated dashboard : HTTP 302 -> /login
+unauthenticated API       : HTTP 401
+signup href in HTML       : 0
+signup anchor in HTML     : 0
+disableUserSignUp (server): true
+```
+
+### Evidence
 
 ```bash
 curl -s -o /dev/null -w 'code=%{http_code} redirect=%{redirect_url}\n' http://127.0.0.1:28300/d/dnmon-host/
@@ -90,11 +115,6 @@ Real output (`evidence/ac2-precise.txt`):
 ```
 code=302 redirect=http://127.0.0.1:28300/login
 search_http=401
-```
-
-### A2.2 Registration entry audit
-
-```
 login_html_bytes=28035
 signup_href_count=0
 signup_anchor_count=0
@@ -114,9 +134,7 @@ GF_AUTH_ANONYMOUS_ENABLED: ${GRAFANA_ANON_ENABLED:-false}
 [auth.anonymous] enabled = false
 ```
 
-Note: the Grafana login page is a single-page app shell, so a raw HTML text scan cannot prove what is rendered. The decisive visual evidence is the screenshot below; the HTML scan above only proves there is no `signup` href/anchor and that `disableUserSignUp` is `true` on the server.
-
-### A2.3 Screenshot (sha256)
+Note: the Grafana login page is a single-page app shell, so a raw HTML text scan cannot prove what is rendered. The decisive visual evidence is the screenshot; the HTML scan above proves there is no `signup` href/anchor and that `disableUserSignUp` is `true` on the server.
 
 | File | SHA256 | Size |
 |---|---|---|
@@ -126,9 +144,23 @@ The screenshot shows only Email, Password, "Log in", and "Forgot your password".
 
 ---
 
-## AC3 — Public access to 9090 / 3000 / 9093 unreachable
+## AC3
 
-### A3.1 Probe from an external host
+**原文（中文）**：从公网访问 9090、3000、9093 端口均不可达（附命令输出）
+
+**English**：Accessing ports 9090, 3000, and 9093 from the public network is unreachable (command output attached).
+
+### Inline numbers
+
+```
+public probe 9090  : http=000 (connect timeout)
+public probe 3000  : http=000
+public probe 9093  : http=000
+public probe 28300 / 28390 / 28393 : http=000
+non-loopback listeners on 283xx   : 0
+```
+
+### Evidence
 
 ```bash
 curl -s -m 5 -o /dev/null -w '%{http_code}' http://<ops-host>:9090   # and 3000, 9093, 28300, 28390, 28393
@@ -145,9 +177,7 @@ port=28390 http=000 curl_exit=28
 port=28393 http=000 curl_exit=28
 ```
 
-`http=000` with `curl_exit=28` means TCP connect timed out, i.e. no reachable listener on the public interface.
-
-### A3.2 Listeners bound to loopback only
+`http=000` with `curl_exit=28` means the TCP connect timed out, i.e. no reachable listener on the public interface.
 
 ```bash
 ss -lntp | grep -E ':(28300|28390|28391|28392|28393|28394)$'
@@ -169,9 +199,22 @@ LISTEN 0 4096 127.0.0.1:28300 0.0.0.0:*
 
 ---
 
-## AC4 — Deleting a dashboard and rolling back restores it
+## AC4
 
-### A4.1 Observed transition
+**原文（中文）**：删除一个面板后按 README 回退步骤可恢复
+
+**English**：After deleting a dashboard, it can be restored following the README rollback steps.
+
+### Inline numbers
+
+```
+before delete : HTTP 200
+after delete  : HTTP 404
+after restore : HTTP 200
+verdict       : PASS
+```
+
+### Evidence
 
 ```bash
 # baseline
@@ -179,7 +222,7 @@ curl -s -o /dev/null -w '%{http_code}' -u admin:*** http://127.0.0.1:28300/api/d
 # delete the file, restart grafana (provisioning disableDeletion: false)
 rm dashboards/redis-overview.json && sudo docker restart dnmon-grafana
 curl -s -o /dev/null -w '%{http_code}' -u admin:*** http://127.0.0.1:28300/api/dashboards/uid/dnmon-redis   # 404
-# rollback per README: restore from backup/
+# rollback per README section 7: restore from backup/
 cp backup/redis-overview.json dashboards/redis-overview.json && sudo docker restart dnmon-grafana
 curl -s -o /dev/null -w '%{http_code}' -u admin:*** http://127.0.0.1:28300/api/dashboards/uid/dnmon-redis   # 200
 ```
@@ -197,7 +240,7 @@ The rollback path is documented in README section 7 and backed by the committed 
 
 ---
 
-## AC5 (housekeeping) — clean shutdown
+## Housekeeping — clean shutdown
 
 `evidence/cleanup-rerun.txt`:
 
@@ -208,11 +251,11 @@ listeners_283xx=0
 mock_processes=0
 
 == pre-existing containers (must remain running) ==
-qixia-prod-api-1|Up 10 days (healthy)
-qixia-mysql-prod|Up 15 hours
-awkn-agent-mail|Up 3 weeks (healthy)
-awkn-woodpecker-server-1|Up 4 weeks (healthy)
-awkn-mysql8-lts|Up 4 weeks (healthy)
+prod-api|Up 10 days (healthy)
+prod-db|Up 15 hours
+mail-service|Up 3 weeks (healthy)
+ci-server|Up 4 weeks (healthy)
+db-lts|Up 4 weeks (healthy)
 ```
 
-Container names of pre-existing workloads are listed only to prove they were untouched.
+Pre-existing workloads are listed with neutral identifiers to prove they were untouched; the captured snapshot keeps the same line structure and status as the original run (`evidence/snapshot-before.txt`, `evidence/snapshot-after.txt`).

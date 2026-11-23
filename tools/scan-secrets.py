@@ -34,6 +34,8 @@ RULES = [
     ("unix_home_path", re.compile(r"/home/[A-Za-z0-9._-]+/")),
     ("agent_id", re.compile(r"\b1642\b")),
     ("bid_id", re.compile(r"\b36430\b")),
+    ("internal_workload_id", re.compile(
+        r"qixia|s4d-api|rider-suite|awkn-(?:agent|woodpecker|mysql)|fe5471c465")),
     ("email", re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")),
 ]
 

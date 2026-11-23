@@ -33,8 +33,8 @@ dnmon_containers=0
 listeners_283xx=0
 mock_processes=0
 == pre-existing containers (must remain running) ==
-qixia-prod-api-1|Up 10 days (healthy)
-qixia-mysql-prod|Up 15 hours
-awkn-agent-mail|Up 3 weeks (healthy)
-awkn-woodpecker-server-1|Up 4 weeks (healthy)
-awkn-mysql8-lts|Up 4 weeks (healthy)
+prod-api|Up 10 days (healthy)
+prod-db|Up 15 hours
+mail-service|Up 3 weeks (healthy)
+ci-server|Up 4 weeks (healthy)
+db-lts|Up 4 weeks (healthy)
