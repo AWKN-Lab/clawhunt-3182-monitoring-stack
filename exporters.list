@@ -1,0 +1,4 @@
+# 数据库 exporter 清单。scripts/gen_targets.sh 据此生成 exporters.json。
+# 格式：<exporter>|<host>|<port>|<env>
+postgres|127.0.0.1|28392|dev
+redis|127.0.0.1|28394|dev

@@ -1,0 +1,4 @@
+AC4 baseline=200
+AC4 after_delete=404 (expect 404)
+AC4 after_restore=200 (expect 200)
+AC4 verdict=PASS

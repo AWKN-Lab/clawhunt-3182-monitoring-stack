@@ -1,0 +1,3 @@
+# 节点清单（node_exporter）。由部署/扩缩容时维护，scripts/gen_targets.sh 据此生成 file_sd。
+# 格式：<role>|<host>|<node_exporter_port>|<env>
+monitoring|127.0.0.1|28391|dev

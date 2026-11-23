@@ -1,0 +1,3 @@
+# Store every file byte-for-byte. Line-ending normalisation would change
+# SHA256 values and break `sha256sum -c MANIFEST.sha256` on other machines.
+* -text

@@ -1,0 +1,10 @@
+== public-side probe from an external host (host address redacted) ==
+== expect connection failure / http=000 for all ==
+port=9090 http=000 curl_exit=28
+port=3000 http=000 curl_exit=28
+port=9093 http=000 curl_exit=28
+port=28300 http=000 curl_exit=28
+port=28390 http=000 curl_exit=28
+port=28393 http=000 curl_exit=28
+
+== loopback-side verify from the same external host over SSH tunnel is documented in README ==

@@ -1,0 +1,15 @@
+== unauthenticated dashboard access ==
+code=302 redirect=http://127.0.0.1:28300/login
+== unauthenticated API ==
+search_http=401
+== login page registration audit (visible text) ==
+login_html_bytes=28035
+signup_href_count=0
+signup_anchor_count=0
+disableUserSignUp_flag="disableUserSignUp":true
+visible_text_contains_sign_up=no
+visible_text_contains_signup=no
+visible_text_contains_register=no
+visible_text_contains_注册=no
+visible_text_head=Grafana Loading Grafana If you're seeing this Grafana has failed to load its application files 1. This could be caused by your reverse proxy settings. 2. If you
+== login form fields present ==

@@ -1,0 +1,49 @@
+=== after 2026-11-23T19:54:39+08:00 ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda3        40G   33G  4.7G  88% /
+--- docker system df ---
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          19        8         3.881GB   1.763GB (45%)
+Containers      9         9         55B       0B (0%)
+Local Volumes   11        7         936.5MB   213.9MB (22%)
+Build Cache     42        0         134.6MB   134.6MB
+--- images ---
+s4d-api:v2-bad|184MB
+s4d-api:v1|184MB
+s4d-api:v2|184MB
+qixia-api:fe5471c465c11249010f82d72f83e938a7e88297|42.1MB
+redis:7-alpine|39.6MB
+python:3.11-slim|125MB
+rider-suite-desk:test|167MB
+rider-suite-h5:test|169MB
+mysql:8.4.13|810MB
+docker.m.daocloud.io/aquasec/trivy:0.76.1|198MB
+ghcr.io/aquasecurity/trivy:0.76.1|198MB
+ghcr.io/dicklesworthstone/mcp_agent_mail_rust:v0.3.39|656MB
+mcr.microsoft.com/playwright/mcp:latest|1.01GB
+quay.io/woodpeckerci/woodpecker-server:v3.19.0|60.6MB
+quay.io/woodpeckerci/woodpecker-agent:v3.19.0|62.1MB
+quay.io/woodpeckerci/plugin-git:2.10.1|52.2MB
+prom/prometheus:latest|201MB
+grafana/grafana:latest|275MB
+prom/node-exporter:latest|20.9MB
+hello-world:latest|13.3kB
+prom/alertmanager:latest|57.5MB
+--- containers ---
+dnmon-prometheus|prom/prometheus:latest|Up 49 seconds
+dnmon-grafana|grafana/grafana:latest|Up 49 seconds
+dnmon-alertmanager|prom/alertmanager:latest|Up 49 seconds
+dnmon-node-exporter|prom/node-exporter:latest|Up 49 seconds
+qixia-prod-api-1|qixia-api:fe5471c465c11249010f82d72f83e938a7e88297|Up 10 days (healthy)
+qixia-mysql-prod|mysql:8.4.13|Up 8 hours
+awkn-agent-mail|ghcr.io/dicklesworthstone/mcp_agent_mail_rust:v0.3.39|Up 3 weeks (healthy)
+awkn-woodpecker-server-1|quay.io/woodpeckerci/woodpecker-server:v3.19.0|Up 4 weeks (healthy)
+awkn-mysql8-lts|mysql:8.4.13|Up 4 weeks (healthy)
+--- listen 283xx ---
+State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                 
+LISTEN 0      4096       127.0.0.1:28390      0.0.0.0:*                                           
+LISTEN 0      4096       127.0.0.1:28391      0.0.0.0:*                                           
+LISTEN 0      5          127.0.0.1:28392      0.0.0.0:*    users:(("python3",pid=608967,fd=3))    
+LISTEN 0      4096       127.0.0.1:28393      0.0.0.0:*                                           
+LISTEN 0      5          127.0.0.1:28394      0.0.0.0:*    users:(("python3",pid=608968,fd=3))    
+LISTEN 0      4096       127.0.0.1:28300      0.0.0.0:*                                           

@@ -1,0 +1,141 @@
+{
+  "host_cpu": {
+    "expr": "100 * (1 - avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\",env=\"dev\"}[2m])))",
+    "series": 1,
+    "values": [
+      "77.25363541747082"
+    ]
+  },
+  "host_mem": {
+    "expr": "100 * (1 - node_memory_MemAvailable_bytes{env=\"dev\"} / node_memory_MemTotal_bytes{env=\"dev\"})",
+    "series": 1,
+    "values": [
+      "75.82280383822018"
+    ]
+  },
+  "host_disk": {
+    "expr": "100 * (1 - node_filesystem_avail_bytes{env=\"dev\",fstype!~\"tmpfs|overlay|squashfs|ramfs\"} / node_filesystem_size_bytes{env=\"dev\",fstype!~\"tmpfs|overlay|squashfs|ramfs\"})",
+    "series": 2,
+    "values": [
+      "2.901554404145079",
+      "88.80773651276"
+    ]
+  },
+  "host_inode": {
+    "expr": "100 * (1 - node_filesystem_files_free{env=\"dev\",fstype!~\"tmpfs|overlay|squashfs|ramfs\"} / node_filesystem_files{env=\"dev\",fstype!~\"tmpfs|overlay|squashfs|ramfs\"})",
+    "series": 2,
+    "values": [
+      "NaN",
+      "33.20809740566472"
+    ]
+  },
+  "host_net_rx": {
+    "expr": "rate(node_network_receive_bytes_total{env=\"dev\",device!~\"lo|veth.*|docker.*|br-.*\"}[2m])",
+    "series": 1,
+    "values": [
+      "1630.7072833333334"
+    ]
+  },
+  "host_net_tx": {
+    "expr": "rate(node_network_transmit_bytes_total{env=\"dev\",device!~\"lo|veth.*|docker.*|br-.*\"}[2m])",
+    "series": 1,
+    "values": [
+      "22804.683898333333"
+    ]
+  },
+  "host_load1": {
+    "expr": "node_load1{env=\"dev\"}",
+    "series": 1,
+    "values": [
+      "2.1"
+    ]
+  },
+  "host_container_restarts": {
+    "expr": "container_restart_count{env=\"dev\"}",
+    "series": 6,
+    "values": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  "pg_conn_ratio": {
+    "expr": "100 * sum without (datname) (pg_stat_database_numbackends{env=\"dev\"}) / pg_settings_max_connections{env=\"dev\"}",
+    "series": 1,
+    "values": [
+      "22.5"
+    ]
+  },
+  "pg_tps": {
+    "expr": "sum(rate(pg_stat_database_xact_commit{env=\"dev\"}[2m])) + sum(rate(pg_stat_database_xact_rollback{env=\"dev\"}[2m]))",
+    "series": 1,
+    "values": [
+      "13.42843666666667"
+    ]
+  },
+  "pg_slow": {
+    "expr": "increase(pg_slow_queries_total{env=\"dev\"}[5m])",
+    "series": 1,
+    "values": [
+      "2.464"
+    ]
+  },
+  "pg_lag": {
+    "expr": "pg_replication_lag_seconds{env=\"dev\"}",
+    "series": 1,
+    "values": [
+      "1.225"
+    ]
+  },
+  "pg_deadlock": {
+    "expr": "increase(pg_stat_database_deadlocks{env=\"dev\"}[5m])",
+    "series": 1,
+    "values": [
+      "0"
+    ]
+  },
+  "pg_bloat_topk": {
+    "expr": "topk(10, pg_table_bloat_bytes{env=\"dev\"})",
+    "series": 10,
+    "values": [
+      "15169786",
+      "14449233",
+      "12978836"
+    ]
+  },
+  "pg_size": {
+    "expr": "pg_database_size_bytes{env=\"dev\"}",
+    "series": 1,
+    "values": [
+      "13314471063"
+    ]
+  },
+  "redis_mem_ratio": {
+    "expr": "100 * redis_memory_used_bytes{env=\"dev\"} / clamp_min(redis_memory_max_bytes{env=\"dev\"},1)",
+    "series": 1,
+    "values": [
+      "32.953863590955734"
+    ]
+  },
+  "redis_hit_ratio": {
+    "expr": "rate(redis_keyspace_hits_total{env=\"dev\"}[2m]) / clamp_min(rate(redis_keyspace_hits_total{env=\"dev\"}[2m]) + rate(redis_keyspace_misses_total{env=\"dev\"}[2m]), 1e-9)",
+    "series": 1,
+    "values": [
+      "0.9355509355509355"
+    ]
+  },
+  "redis_clients": {
+    "expr": "redis_connected_clients{env=\"dev\"}",
+    "series": 1,
+    "values": [
+      "50"
+    ]
+  },
+  "redis_evicted": {
+    "expr": "increase(redis_evicted_keys_total{env=\"dev\"}[2m])",
+    "series": 1,
+    "values": [
+      "1.9154000000000002"
+    ]
+  }
+}

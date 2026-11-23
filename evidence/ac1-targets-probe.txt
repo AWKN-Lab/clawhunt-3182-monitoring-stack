@@ -1,0 +1,15 @@
+PROM_READY_HTTP=200
+GRAFANA_API_HEALTH_CODE=200
+GRAFANA_API_HEALTH_BODY={  "commit": "30bb7a93ca",  "database": "ok",  "version": "8.3.3"}
+ALERTMANAGER_READY_HTTP=200
+--- targets ---
+alertmanager 127.0.0.1:28393 up
+node 127.0.0.1:28391 up
+postgres mock-postgres-1 up
+prometheus 127.0.0.1:28390 up
+redis mock-redis-1 up
+--- dashboards loaded ---
+nh6Kr4ROk | Monitoring
+dnmon-postgresql | PostgreSQL 总览 · PostgreSQL Overview
+dnmon-redis | Redis 总览 · Redis Overview
+dnmon-host | 主机总览 · Host Overview

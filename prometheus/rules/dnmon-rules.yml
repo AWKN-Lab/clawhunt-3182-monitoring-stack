@@ -1,0 +1,34 @@
+groups:
+  - name: dnmon-basic
+    rules:
+      - alert: NodeExporterDown
+        expr: up{job="node"} == 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "node_exporter 抓取失败 ({{ $labels.instance }})"
+
+      - alert: HostDiskWillFill
+        expr: 100 * (1 - node_filesystem_avail_bytes{fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"}) > 85
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "磁盘使用率 > 85% ({{ $labels.instance }} {{ $labels.mountpoint }})"
+
+      - alert: PostgresConnectionsHigh
+        expr: 100 * pg_stat_database_numbackends / pg_settings_max_connections > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "PG 连接数超过 max_connections 的 80%"
+
+      - alert: RedisEvictions
+        expr: increase(redis_evicted_keys_total[10m]) > 0
+        for: 5m
+        labels:
+          severity: info
+        annotations:
+          summary: "Redis 出现 key 驱逐"

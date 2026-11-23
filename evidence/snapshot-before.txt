@@ -1,0 +1,39 @@
+=== before 2026-11-23T19:53:24+08:00 ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda3        40G   33G  4.8G  88% /
+--- docker system df ---
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          18        4         3.841GB   2.272GB (59%)
+Containers      5         5         55B       0B (0%)
+Local Volumes   8         4         935.6MB   213.9MB (22%)
+Build Cache     42        0         134.6MB   134.6MB
+--- images ---
+s4d-api:v1|184MB
+s4d-api:v2|184MB
+s4d-api:v2-bad|184MB
+qixia-api:fe5471c465c11249010f82d72f83e938a7e88297|42.1MB
+redis:7-alpine|39.6MB
+python:3.11-slim|125MB
+rider-suite-desk:test|167MB
+rider-suite-h5:test|169MB
+mysql:8.4.13|810MB
+docker.m.daocloud.io/aquasec/trivy:0.76.1|198MB
+ghcr.io/aquasecurity/trivy:0.76.1|198MB
+ghcr.io/dicklesworthstone/mcp_agent_mail_rust:v0.3.39|656MB
+mcr.microsoft.com/playwright/mcp:latest|1.01GB
+quay.io/woodpeckerci/woodpecker-agent:v3.19.0|62.1MB
+quay.io/woodpeckerci/woodpecker-server:v3.19.0|60.6MB
+quay.io/woodpeckerci/plugin-git:2.10.1|52.2MB
+prom/prometheus:latest|201MB
+grafana/grafana:latest|275MB
+prom/node-exporter:latest|20.9MB
+hello-world:latest|13.3kB
+prom/alertmanager:latest|57.5MB
+--- containers ---
+qixia-prod-api-1|qixia-api:fe5471c465c11249010f82d72f83e938a7e88297|Up 10 days (healthy)
+qixia-mysql-prod|mysql:8.4.13|Up 8 hours
+awkn-agent-mail|ghcr.io/dicklesworthstone/mcp_agent_mail_rust:v0.3.39|Up 3 weeks (healthy)
+awkn-woodpecker-server-1|quay.io/woodpeckerci/woodpecker-server:v3.19.0|Up 4 weeks (healthy)
+awkn-mysql8-lts|mysql:8.4.13|Up 4 weeks (healthy)
+--- listen 283xx ---
+State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                 

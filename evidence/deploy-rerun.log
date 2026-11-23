@@ -1,0 +1,29 @@
+[deploy] 生成 file_sd 目标文件
+generated: targets/exporters.json targets/nodes.json 
+json-valid: ok
+[deploy] 渲染 Prometheus 配置（SCRAPE_INTERVAL=15s）
+[deploy] 生成容器重启次数 textfile 指标
+wrote textfile/container_restarts.prom (16 lines)
+[deploy] 启动本地 mock exporter（pg:28392 / redis:28394，只绑回环）
+[deploy] docker compose up -d
+ Container dnmon-prometheus  Creating
+ Container dnmon-alertmanager  Creating
+ Container dnmon-grafana  Creating
+ Container dnmon-node-exporter  Creating
+ Container dnmon-node-exporter  Created
+ Container dnmon-alertmanager  Created
+ Container dnmon-prometheus  Created
+ Container dnmon-grafana  Created
+ Container dnmon-node-exporter  Starting
+ Container dnmon-prometheus  Starting
+ Container dnmon-alertmanager  Starting
+ Container dnmon-grafana  Starting
+ Container dnmon-prometheus  Started
+ Container dnmon-grafana  Started
+ Container dnmon-alertmanager  Started
+ Container dnmon-node-exporter  Started
+COMPOSE_UP_EXIT=0
+[deploy] 探活
+PROMETHEUS_READY_HTTP=200
+GRAFANA_HEALTH_HTTP=200
+[deploy] 完成。面板: http://127.0.0.1:28300 （需 SSH 隧道；不对公网开放）

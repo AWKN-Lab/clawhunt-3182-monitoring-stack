@@ -1,0 +1,40 @@
+== before down ==
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda3        40G   33G  4.4G  89% /
+dnmon-alertmanager|Up About a minute
+dnmon-node-exporter|Up About a minute
+dnmon-grafana|Up About a minute
+dnmon-prometheus|Up About a minute
+[stop] docker compose down
+ Container dnmon-node-exporter  Stopping
+ Container dnmon-prometheus  Stopping
+ Container dnmon-alertmanager  Stopping
+ Container dnmon-grafana  Stopping
+ Container dnmon-prometheus  Stopped
+ Container dnmon-prometheus  Removing
+ Container dnmon-node-exporter  Stopped
+ Container dnmon-node-exporter  Removing
+ Container dnmon-alertmanager  Stopped
+ Container dnmon-alertmanager  Removing
+ Container dnmon-grafana  Stopped
+ Container dnmon-grafana  Removing
+ Container dnmon-grafana  Removed
+ Container dnmon-alertmanager  Removed
+ Container dnmon-prometheus  Removed
+ Container dnmon-node-exporter  Removed
+COMPOSE_DOWN_EXIT=0
+[stop] killed mock pid=761816
+[stop] killed mock pid=761817
+[stop] 剩余 dnmon 容器：
+== after down ==
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda3        40G   33G  4.4G  89% /
+dnmon_containers=0
+listeners_283xx=0
+mock_processes=0
+== pre-existing containers (must remain running) ==
+qixia-prod-api-1|Up 10 days (healthy)
+qixia-mysql-prod|Up 15 hours
+awkn-agent-mail|Up 3 weeks (healthy)
+awkn-woodpecker-server-1|Up 4 weeks (healthy)
+awkn-mysql8-lts|Up 4 weeks (healthy)

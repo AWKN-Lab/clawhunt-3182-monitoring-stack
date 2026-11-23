@@ -1,0 +1,127 @@
+{
+  "uid": "dnmon-host",
+  "title": "主机总览 · Host Overview",
+  "description": "主机层：CPU、内存、磁盘使用率与 inode、网络流量、系统负载、容器重启次数。数据源 Prometheus（node_exporter + textfile collector）。",
+  "tags": ["dnmon", "host", "infra"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "editable": true,
+  "graphTooltip": 1,
+  "time": {"from": "now-3h", "to": "now"},
+  "templating": {
+    "list": [
+      {
+        "name": "env", "label": "环境", "type": "custom",
+        "query": "dev", "current": {"text": "dev", "value": "dev"},
+        "options": [{"text": "dev", "value": "dev", "selected": true}],
+        "includeAll": false, "multi": false, "hide": 0
+      },
+      {
+        "name": "node", "label": "节点", "type": "query",
+        "datasource": {"type": "prometheus", "uid": "dnmon-prom"},
+        "query": {"query": "label_values(node_uname_info{env=\"$env\"}, instance)", "refId": "node"},
+        "refresh": 1, "includeAll": true, "allValue": ".*", "multi": true,
+        "current": {"text": "All", "value": "$__all"}, "hide": 0
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1, "type": "timeseries", "title": "CPU 使用率",
+      "datasource": {"type": "prometheus", "uid": "dnmon-prom"},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "fieldConfig": {"defaults": {"unit": "percent", "min": 0, "max": 100}, "overrides": []},
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "dnmon-prom"}, "refId": "A",
+        "expr": "100 * (1 - avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\",env=\"$env\",instance=~\"$node\"}[$__rate_interval])))",
+        "legendFormat": "{{instance}}"
+      }]
+    },
+    {
+      "id": 2, "type": "timeseries", "title": "内存使用率",
+      "datasource": {"type": "prometheus", "uid": "dnmon-prom"},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+      "fieldConfig": {"defaults": {"unit": "percent", "min": 0, "max": 100}, "overrides": []},
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "dnmon-prom"}, "refId": "A",
+        "expr": "100 * (1 - node_memory_MemAvailable_bytes{env=\"$env\",instance=~\"$node\"} / node_memory_MemTotal_bytes{env=\"$env\",instance=~\"$node\"})",
+        "legendFormat": "{{instance}}"
+      }]
+    },
+    {
+      "id": 3, "type": "timeseries", "title": "磁盘使用率",
+      "datasource": {"type": "prometheus", "uid": "dnmon-prom"},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+      "fieldConfig": {"defaults": {"unit": "percent", "min": 0, "max": 100}, "overrides": []},
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "dnmon-prom"}, "refId": "A",
+        "expr": "100 * (1 - node_filesystem_avail_bytes{env=\"$env\",instance=~\"$node\",fstype!~\"tmpfs|overlay|squashfs|ramfs\"} / node_filesystem_size_bytes{env=\"$env\",instance=~\"$node\",fstype!~\"tmpfs|overlay|squashfs|ramfs\"})",
+        "legendFormat": "{{instance}} {{mountpoint}}"
+      }]
+    },
+    {
+      "id": 4, "type": "timeseries", "title": "inode 使用率",
+      "datasource": {"type": "prometheus", "uid": "dnmon-prom"},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+      "fieldConfig": {"defaults": {"unit": "percent", "min": 0, "max": 100}, "overrides": []},
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "dnmon-prom"}, "refId": "A",
+        "expr": "100 * (1 - node_filesystem_files_free{env=\"$env\",instance=~\"$node\",fstype!~\"tmpfs|overlay|squashfs|ramfs\"} / node_filesystem_files{env=\"$env\",instance=~\"$node\",fstype!~\"tmpfs|overlay|squashfs|ramfs\"})",
+        "legendFormat": "{{instance}} {{mountpoint}}"
+      }]
+    },
+    {
+      "id": 5, "type": "timeseries", "title": "网络流量 · 接收",
+      "datasource": {"type": "prometheus", "uid": "dnmon-prom"},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+      "fieldConfig": {"defaults": {"unit": "Bps"}, "overrides": []},
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "dnmon-prom"}, "refId": "A",
+        "expr": "rate(node_network_receive_bytes_total{env=\"$env\",instance=~\"$node\",device!~\"lo|veth.*|docker.*|br-.*\"}[$__rate_interval])",
+        "legendFormat": "{{instance}} {{device}}"
+      }]
+    },
+    {
+      "id": 6, "type": "timeseries", "title": "网络流量 · 发送",
+      "datasource": {"type": "prometheus", "uid": "dnmon-prom"},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+      "fieldConfig": {"defaults": {"unit": "Bps"}, "overrides": []},
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "dnmon-prom"}, "refId": "A",
+        "expr": "rate(node_network_transmit_bytes_total{env=\"$env\",instance=~\"$node\",device!~\"lo|veth.*|docker.*|br-.*\"}[$__rate_interval])",
+        "legendFormat": "{{instance}} {{device}}"
+      }]
+    },
+    {
+      "id": 7, "type": "timeseries", "title": "系统负载 (1m / 5m / 15m)",
+      "datasource": {"type": "prometheus", "uid": "dnmon-prom"},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24},
+      "fieldConfig": {"defaults": {"unit": "short"}, "overrides": []},
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
+      "targets": [
+        {"datasource": {"type": "prometheus", "uid": "dnmon-prom"}, "refId": "A", "expr": "node_load1{env=\"$env\",instance=~\"$node\"}", "legendFormat": "load1 {{instance}}"},
+        {"datasource": {"type": "prometheus", "uid": "dnmon-prom"}, "refId": "B", "expr": "node_load5{env=\"$env\",instance=~\"$node\"}", "legendFormat": "load5 {{instance}}"},
+        {"datasource": {"type": "prometheus", "uid": "dnmon-prom"}, "refId": "C", "expr": "node_load15{env=\"$env\",instance=~\"$node\"}", "legendFormat": "load15 {{instance}}"}
+      ]
+    },
+    {
+      "id": 8, "type": "table", "title": "容器重启次数",
+      "datasource": {"type": "prometheus", "uid": "dnmon-prom"},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24},
+      "fieldConfig": {"defaults": {}, "overrides": []},
+      "options": {"showHeader": true},
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "dnmon-prom"}, "refId": "A",
+        "expr": "container_restart_count{env=\"$env\"}", "format": "table", "instant": true
+      }]
+    }
+  ]
+}

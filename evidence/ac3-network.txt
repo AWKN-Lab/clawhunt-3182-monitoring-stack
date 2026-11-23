@@ -1,0 +1,10 @@
+== listen sockets (127.0.0.1 only expected) ==
+State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                 
+LISTEN 0      4096       127.0.0.1:28390      0.0.0.0:*                                           
+LISTEN 0      4096       127.0.0.1:28391      0.0.0.0:*                                           
+LISTEN 0      5          127.0.0.1:28392      0.0.0.0:*    users:(("python3",pid=761816,fd=3))    
+LISTEN 0      4096       127.0.0.1:28393      0.0.0.0:*                                           
+LISTEN 0      5          127.0.0.1:28394      0.0.0.0:*    users:(("python3",pid=761817,fd=3))    
+LISTEN 0      4096       127.0.0.1:28300      0.0.0.0:*                                           
+== count of listeners bound to non-loopback (expect 0) ==
+0
