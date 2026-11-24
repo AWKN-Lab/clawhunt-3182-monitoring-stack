@@ -1,7 +1,7 @@
 0400a0d7d9970cb70a9c8780f26baae5d62db9465bb5df220ac11b3953c3c48b  ./.gitattributes
 5e3c02923b585cef6062fbe6b2920d4608c096ece9ff9d84a84b001c2431cf1d  ./ACCEPTANCE-EVIDENCE.md
 6c1ca81e82cefd580e122143c98e0904e70e73467b177ae2ac635e9d16ea8a94  ./ACCEPTANCE.md
-db81c20172bcb9199b000a68d9b3fd38bab8ea311a9b93dbaf48aa7eb1a7a8ea  ./README.md
+3131c8aca1427631dddea916c5f53b693041fc61a15199a61cd049f2cdf683ef  ./README.md
 14aaaa5c1ab17ed67de8d7ea22f7a0d6ce0331c92a93b974e7cf3f2bd71e372b  ./alertmanager/alertmanager.yml
 261acb75988f241424f20ee50a92384a533bde30e1c0ac6098e3a108bbfc80e6  ./backup/host-overview.json
 d801c09d092e4be70564dbc8efaa0a7e3a82153275503514d1ae6e91408e6eab  ./backup/postgresql-overview.json

@@ -30,7 +30,7 @@ evidence/                      截图与运行日志
 校验交付完整性：
 
 ```bash
-sha256sum -c MANIFEST.sha256        # 期望：39 行全部 OK
+sha256sum -c MANIFEST.sha256        # 期望：40 行全部 OK（OK=40 FAILED=0）
 python3 tools/scan-secrets.py       # 期望：FINDINGS=0
 ```
 
